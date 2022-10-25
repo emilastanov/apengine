@@ -13,6 +13,7 @@ class Item extends Component{
         this.item.style.position = 'absolute';
         this.item.id = name;
         this.name = name;
+        this.type = type;
 
         this.useState({
             size: type === "box" ? size : {width: size, height: size},

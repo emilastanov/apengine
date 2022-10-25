@@ -16,6 +16,14 @@ export const collisionMixin = {
         let up = false;
         let down = false;
 
+        const pointsOfItem = {
+            leftSide: [],
+            rightSide: [],
+            upSide: [],
+            downSide: []
+        };
+
+
         anotherItems.forEach((anotherItem)=>{
             left = left || this.checkPointInAreaOfItem({
                 x: currentItemPosX,
@@ -73,9 +81,14 @@ export const collisionMixin = {
         this.setState("collision", collision);
     },
     checkPointInAreaOfItem(point, item) {
-        return point.y >= item.state.pos.y &&
-            point.y <= item.state.pos.y + item.state.size.height &&
-            point.x >= item.state.pos.x &&
-            point.x <= item.state.pos.x + item.state.size.width
+        if (item.type === 'box') {
+            return point.y >= item.state.pos.y &&
+                point.y <= item.state.pos.y + item.state.size.height &&
+                point.x >= item.state.pos.x &&
+                point.x <= item.state.pos.x + item.state.size.width
+        } else if (item.type === 'ball') {
+            return (point.x - (item.state.pos.x + item.state.size.width/2))**2 +
+                (point.y - (item.state.pos.y + item.state.size.height/2))**2 <= (item.state.size.width/2)**2;
+        }
     }
 }

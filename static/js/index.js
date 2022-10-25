@@ -1,6 +1,7 @@
 import {SCENE} from "./constants.js";
 import Game from "./components/game/index.js";
 import Item from "./components/item/index.js";
+import {getPointsOfCircleLyingOnSameLineWithOuterPoint} from "./helpers/geometry.js";
 
 const scene = document.getElementById(SCENE);
 
@@ -9,7 +10,7 @@ const game = new Game({
 	width: 600,
 	height: 400,
 	color: "#6699e8",
-	gravity: true
+	gravity: false
 });
 
 
@@ -36,10 +37,10 @@ const earth = new Item({
 const box1 = new Item({
 	type: "box",
 	size: {
-		width: 75,
-		height: 50
+		width: 70,
+		height: 70
 	},
-	color: "gray",
+	color: "black",
 	name: "box1",
 	fallSpeed: 5
 });
@@ -52,9 +53,20 @@ const box2 = new Item({
 	},
 	color: "gray",
 	name: "box2",
-	transparent: true,
 	fallSpeed: 5
 });
+const point1 = new Item({
+	type: "ball",
+	size: 5,
+	color: "red",
+	name: "point1",
+})
+const point2 = new Item({
+	type: "ball",
+	size: 5,
+	color: "red",
+	name: "point2",
+})
 
 game.addItem(ball1, {x: 150, y: 150});
 game.addItem(earth, {x: 0, y: 0});
@@ -63,6 +75,23 @@ game.addItem(box2, {x: 400, y: 200});
 game.useKeyboard();
 let counter = 0;
 game.loop(()=>{
-	ball1.useKeyboardForMove(5, game.state.pressedKeyboardButtons);
+	// ball1.useKeyboardForMove(1, game.state.pressedKeyboardButtons);
+	if (counter === 0) {
+		const points = getPointsOfCircleLyingOnSameLineWithOuterPoint({
+			center: {
+				x: 175,
+				y: 175
+			},
+			radius: 25
+		},{
+			x: 85,
+			y: 300
+		})
+
+		console.log(points)
+		game.addItem(point1, points[0]);
+		game.addItem(point2, points[1]);
+		counter =1
+	}
 },10)
 
