@@ -45,7 +45,7 @@ export const movementMixin = {
     },
     useKeyboardForMove(speed, keyboardState) {
         if(keyboardState['up']) {
-            this.move(speed + this.state.fallSpeed, 'up')
+            this.move(speed + (this.state.game.state.gravity? this.state.fallSpeed : 0), 'up')
         }
         if(keyboardState['down']) {
             this.move(speed, 'down')

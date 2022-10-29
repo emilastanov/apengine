@@ -69,29 +69,15 @@ const point2 = new Item({
 })
 
 game.addItem(ball1, {x: 150, y: 150});
-game.addItem(earth, {x: 0, y: 0});
-game.addItem(box1, {x: 15, y: 300});
-game.addItem(box2, {x: 400, y: 200});
+// game.addItem(earth, {x: 0, y: 0});
+game.addItem(box1, {x: 300, y: 200});
+// game.addItem(box2, {x: 400, y: 200});
 game.useKeyboard();
 let counter = 0;
 game.loop(()=>{
-	// ball1.useKeyboardForMove(1, game.state.pressedKeyboardButtons);
+	ball1.useKeyboardForMove(1, game.state.pressedKeyboardButtons);
 	if (counter === 0) {
-		const points = getPointsOfCircleLyingOnSameLineWithOuterPoint({
-			center: {
-				x: 175,
-				y: 175
-			},
-			radius: 25
-		},{
-			x: 85,
-			y: 300
-		})
-
-		console.log(points)
-		game.addItem(point1, points[0]);
-		game.addItem(point2, points[1]);
 		counter =1
 	}
-},10)
+},15)
 

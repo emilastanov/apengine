@@ -4,7 +4,7 @@ import {itemAlreadyExist} from "../../errors/errors.js";
 
 export const itemMixin = {
     addItem (item, pos) {
-        console.log(item);
+        // console.log(item);
         if (item.name in this.state.items){
             throw itemAlreadyExist(item.name);
         } else {
