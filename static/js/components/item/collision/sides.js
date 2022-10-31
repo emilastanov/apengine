@@ -1,44 +1,46 @@
-import {detectSideOfCircle} from "../../../helpers/geometry.js";
 
-export const getPointsBySides = (figure, points, direction) => {
-    const pointsBySides = {
-        left: [{
-            x: figure.state.pos.x,
-            y: figure.state.pos.y + figure.state.size.height/2
-        }],
-        right: [{
-            x: figure.state.pos.x + figure.state.size.width,
-            y: figure.state.pos.y + figure.state.size.height/2
-        }],
-        up: [{
-            x: figure.state.pos.x + figure.state.size.width/2,
-            y: figure.state.pos.y + figure.state.size.height
-        }],
-        down: [{
-            x: figure.state.pos.x + figure.state.size.width/2,
-            y: figure.state.pos.y
-        }]
+
+export const getPointsBySides = (figure, points, directions) => {
+    const _points = [...points,{
+        x: figure.state.pos.x,
+        y: figure.state.pos.y + figure.state.size.height / 2
+    }, {
+        x: figure.state.pos.x + figure.state.size.width,
+        y: figure.state.pos.y + figure.state.size.height / 2
+    }, {
+        x: figure.state.pos.x + figure.state.size.width / 2,
+        y: figure.state.pos.y + figure.state.size.height
+    }, {
+        x: figure.state.pos.x + figure.state.size.width / 2,
+        y: figure.state.pos.y
+    }];
+    const centerOfFigure = {
+        x: figure.state.pos.x + figure.state.size.width / 2,
+        y: figure.state.pos.y + figure.state.size.height / 2
     };
+    const pointsBySides = {left:[],right:[],up:[],down:[]};
 
-    points.forEach((point)=>{
-        const side = detectSideOfCircle({
-            center: {
-                x: figure.state.pos.x + figure.state.size.width / 2,
-                y: figure.state.pos.y + figure.state.size.height / 2
-            },
-            radius: figure.state.size.width / 2
-        },point)
-
-        if (side === 'left'){
-            pointsBySides.left = [point, ...pointsBySides.left]
-        } else if (side === 'right') {
-            pointsBySides.right = [point, ...pointsBySides.right]
-        } else if (side === 'up') {
-            pointsBySides.up = [point, ...pointsBySides.up]
-        } else if (side === 'down') {
-            pointsBySides.down = [point, ...pointsBySides.down]
+    Object.keys(directions).forEach((direction)=>{
+        if(directions[direction]){
+            _points.filter((point)=>{
+                if (direction === 'right' && point.x > centerOfFigure.x) {
+                    return point
+                }
+                if (direction === 'left' && point.x < centerOfFigure.x) {
+                    return point
+                }
+                if (direction === 'down' && point.y < centerOfFigure.y) {
+                    return point
+                }
+                if (direction === 'up' && point.y > centerOfFigure.y) {
+                    return point
+                }
+            }).forEach((point) => {
+                pointsBySides[direction] = [point, ...pointsBySides[direction]]
+            });
         }
     });
+
 
     return pointsBySides;
 }

@@ -10,32 +10,40 @@ export const getPointsOfCircleLyingOnSameLineWithOuterPoint = (
     const y1 = k*(x1 - circle.center.x) + circle.center.y
     const y2 = k*(x2 - circle.center.x) + circle.center.y
 
-
     return [{x: x1, y: y1}, {x: x2, y: y2}]
 };
 
-export const detectSideOfCircle = (
-    circle,
+export const getPointsOfRectLyingOnSameLineWithOuterPoint = (
+    rect,
     point
 ) => {
-    const leftSideLine = circle.center.x - circle.radius/(2**0.5);
-    const rightSideLine = circle.center.x + circle.radius/(2**0.5);
-    const topSideLine = circle.center.y + circle.radius/(2**0.5);
-    const bottomSideLine = circle.center.y - circle.radius/(2**0.5);
-
-    const isPointInCircle = ({x,y}) => ((x-circle.center.x)**2 + (y-circle.center.y)**2 <= circle.radius**2);
-
-    if (isPointInCircle(point) && point.x <= leftSideLine) {
-        return 'left';
-    } else if (isPointInCircle(point) && point.x >= rightSideLine) {
-        return 'right';
-    } else if (isPointInCircle(point) && point.y >= topSideLine) {
-        return 'up';
-    } else if (isPointInCircle(point) && point.y <= bottomSideLine) {
-        return 'down';
-    } else {
-        return null;
+    const center = {
+        x: rect.pos.x + rect.width/2,
+        y: rect.pos.y + rect.height/2
     }
+    const k = (point.y-center.y)/(point.x-center.x);
+    const b = center.y - k*center.x;
+
+    const isYInRect = (y) => (rect.pos.y <= y && y <= rect.pos.y + rect.height);
+    const isXInRect = (x) => (rect.pos.x <= x && x <= rect.pos.x + rect.width);
+
+    let res = [];
+    if ( isYInRect((rect.pos.x + rect.width)*k + b)) {
+        res.push({x: rect.pos.x + rect.width, y: (rect.pos.x + rect.width)*k + b});
+    } else if (isXInRect((rect.pos.y + rect.height - b)/k)) {
+        res.push({x: (rect.pos.y + rect.height - b)/k, y: rect.pos.y + rect.height});
+    }
+    if ( isYInRect(rect.pos.x*k + b)) {
+        res.push({x: rect.pos.x, y: rect.pos.x*k + b});
+    } else if (isXInRect((rect.pos.y - b)/k)) {
+        res.push({x: (rect.pos.y - b)/k, y: rect.pos.y});
+    }
+    if (point.x === center.x){
+        res.push({x: center.x, y: rect.pos.y + rect.height});
+        res.push({x: center.x, y: rect.pos.y});
+    }
+
+    return res;
 };
 
 export const checkPointInAreaOfItem = (point, item) => {

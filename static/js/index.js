@@ -19,7 +19,8 @@ const ball1 = new Item({
 	size: 50,
 	color: "yellow",
 	name: "ball1",
-	fallSpeed: 5	
+	fallSpeed: 5,
+	fixed: true
 });
 
 
@@ -42,16 +43,17 @@ const box1 = new Item({
 	},
 	color: "black",
 	name: "box1",
-	fallSpeed: 5
+	fixed: false,
+	fallSpeed: 10
 });
 
 const box2 = new Item({
 	type: "box",
 	size: {
-		width: 75,
-		height: 50
+		width: 40,
+		height: 40
 	},
-	color: "gray",
+	color: "yellow",
 	name: "box2",
 	fallSpeed: 5
 });
@@ -68,16 +70,15 @@ const point2 = new Item({
 	name: "point2",
 })
 
-game.addItem(ball1, {x: 150, y: 150});
+// game.addItem(ball1, {x: 150, y: 150});
 // game.addItem(earth, {x: 0, y: 0});
 game.addItem(box1, {x: 300, y: 200});
-// game.addItem(box2, {x: 400, y: 200});
+game.addItem(box2, {x: 150, y: 150});
 game.useKeyboard();
 let counter = 0;
 game.loop(()=>{
-	ball1.useKeyboardForMove(1, game.state.pressedKeyboardButtons);
-	if (counter === 0) {
-		counter =1
-	}
+	// ball1.useKeyboardForMove(1, game.state.pressedKeyboardButtons);
+	box2.useKeyboardForMove(1, game.state.pressedKeyboardButtons);
+
 },15)
 

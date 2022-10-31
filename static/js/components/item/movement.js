@@ -1,11 +1,10 @@
-
 export const movementMixin = {
-    setPos (pos) {
+    setPos(pos) {
         this.setState('pos', pos);
         this.item.style.bottom = `${pos.y}px`;
         this.item.style.left = `${pos.x}px`;
     },
-    changePos (pos){
+    changePos(pos) {
         let posX = this.state.pos.x;
         let posY = this.state.pos.y;
 
@@ -20,7 +19,7 @@ export const movementMixin = {
             y: posY
         });
     },
-    move (speed, direction){
+    move(speed, direction) {
         this.checkCollision();
 
         let speedX = 0;
@@ -44,17 +43,19 @@ export const movementMixin = {
         })
     },
     useKeyboardForMove(speed, keyboardState) {
-        if(keyboardState['up']) {
-            this.move(speed + (this.state.game.state.gravity? this.state.fallSpeed : 0), 'up')
-        }
-        if(keyboardState['down']) {
-            this.move(speed, 'down')
-        }
-        if(keyboardState['left']) {
-            this.move(speed, 'left')
-        }
-        if(keyboardState['right']) {
-            this.move(speed, 'right')
-        }
+        ['up', 'down', 'left', 'right'].forEach((direction) => {
+            if (keyboardState[direction]) {
+                this.move(speed + (this.state.game.state.gravity ? this.state.fallSpeed : 0), direction);
+                this.setMovementDirection(direction, true);
+            } else {
+                this.setMovementDirection(direction, false);
+            }
+        });
+    },
+    setMovementDirection(direction, state) {
+        const directions = {...this.state.movementDirection};
+        directions[direction] = state;
+
+        this.setState("movementDirection", directions);
     }
 }

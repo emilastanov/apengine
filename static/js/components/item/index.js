@@ -21,13 +21,9 @@ class Item extends Component{
             fallSpeed: fallSpeed,
             pos: null,
             transparent: !transparent,
+            movementDirection: {},
             fixed: fixed,
-            collision: {
-                left: false,
-                right: false,
-                down: false,
-                up: false
-            }
+            collision: {}
         });
 
 
