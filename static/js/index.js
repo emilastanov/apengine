@@ -1,6 +1,7 @@
 import {SCENE} from "./constants.js";
 import Game from "./components/game/index.js";
 import Item from "./components/item/index.js";
+import Generator from "./components/generator/index.js";
 
 const scene = document.getElementById(SCENE);
 
@@ -13,62 +14,50 @@ const game = new Game({
 });
 
 
-const ball1 = new Item({
+const pipes = new Generator({
+	game: game,
+	itemOptions: {
+		type: "box",
+		size: {
+			width: 100,
+			height: 300
+		},
+		color: "#2f8a2f"
+	},
+	beginPos: [
+		{x: 600, y: -150},
+		{x: 600, y: 250},
+	],
+	posFluctuation: {
+		x: 0,
+		y: 50,
+		maxIter: 3
+	},
+	move: {
+		speed: 2,
+		direction: "left"
+	},
+	frequency: 100,
+	removeIfOutside: true,
+	showTime: true
+});
+
+const ball = new Item({
 	type: "ball",
-	size: 50,
+	size: 30,
 	color: "yellow",
-	name: "ball1",
+	name: "ball",
 	fallSpeed: 5,
 });
 
-
-const earth = new Item({
-	type: "box",
-	size: {
-		width: 600,
-		height: 50
-	},
-	color: "#916330",
-	name: "earth",
-	fixed: true
-});
-
-const box1 = new Item({
-	type: "box",
-	size: {
-		width: 70,
-		height: 70
-	},
-	color: "black",
-	name: "box1",
-	fixed: false,
-	fallSpeed: 10
-});
-
-const box2 = new Item({
-	type: "box",
-	size: {
-		width: 70,
-		height: 40
-	},
-	color: "black",
-	name: "box2",
-	fixed: true,
-	fallSpeed: 5
-});
-
-game.addItem(ball1, {x: 150, y: 150});
-game.addItem(box2, {x: 400, y: 150});
-game.addItem(earth, {x: 0, y: 0});
-game.addItem(box1, {x: 300, y: 200});
 game.useKeyboard();
 
+game.addItem(ball, {x: 50, y: 200})
+
 game.loop(()=>{
-	ball1.useKeyboardForMove(5, game.state.pressedKeyboardButtons);
-	if(ball1.state.collision.left && ball1.state.collision.right){
-		ball1.changePos({x: 150, y: 150})
-	}
-	// box2.useKeyboardForMove(5, game.state.pressedKeyboardButtons);
+
+	pipes.generate();
+	ball.useKeyboardForMove(5, game.state.pressedKeyboardButtons, true);
 
 },16)
 

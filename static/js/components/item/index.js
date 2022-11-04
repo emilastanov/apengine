@@ -4,6 +4,7 @@ import Component from "../component.js";
 import {UNDEFINED_ITEM_TYPE} from "../../errors/errors.js";
 import {movementMixin} from "./movement.js";
 import {collisionMixin} from "./collision/index.js";
+import {getRandomId} from "../../helpers/random.js";
 
 
 class Item extends Component{
@@ -12,8 +13,8 @@ class Item extends Component{
         super();
         this.item = document.createElement("div");
         this.item.style.position = 'absolute';
-        this.item.id = name;
-        this.name = name;
+        this.item.id = name? name : getRandomId();
+        this.name = name? name : getRandomId();
         this.type = type;
 
         this.useState({

@@ -24,8 +24,11 @@ export const keyboardMixin = {
                     event.preventDefault();
                     this.changeKeyboardButtonState("down", true);
                     break;
+                case 32:
+                    event.preventDefault();
+                    this.changeKeyboardButtonState("space", true);
+                    break;
                 default:
-                    // console.log(event.keyCode)
                     break;
             }
         });
@@ -53,10 +56,10 @@ export const keyboardMixin = {
                     break;
                 case 32:
                     event.preventDefault();
-                    this.changeKeyboardButtonState("space", !this.state.pressedKeyboardButtons.gravity);
+                    this.changeKeyboardButtonState("space", false);
                     break;
                 default:
-                    console.log(event.keyCode)
+                    // console.log(event.keyCode)
                     break;
             }
         });

@@ -42,20 +42,33 @@ export const movementMixin = {
             y: this.state.pos.y + speedY
         })
     },
-    useKeyboardForMove(speed, keyboardState) {
-        ['up', 'down', 'left', 'right'].forEach((direction) => {
-            if (keyboardState[direction]) {
-                this.setMovementDirection(direction, true);
-                this.move(speed + (this.state.game.state.gravity ? this.state.fallSpeed : 0), direction);
-            } else {
-                this.setMovementDirection(direction, false);
-            }
-        });
+    useKeyboardForMove(speed, keyboardState, jumpOnly=false) {
+        if(!jumpOnly){
+            ['up', 'down', 'left', 'right'].forEach((direction) => {
+                if (keyboardState[direction]) {
+                    this.setMovementDirection(direction, true);
+                    this.move(speed + (this.state.game.state.gravity ? this.state.fallSpeed : 0), direction);
+                } else {
+                    this.setMovementDirection(direction, false);
+                }
+            });
+        }
+        this.jump(speed, keyboardState['space']);
     },
     setMovementDirection(direction, state) {
         const directions = {...this.state.movementDirection};
         directions[direction] = state;
 
         this.setState("movementDirection", directions);
+    },
+    jump (speed, state) {
+        if (state && !this.state.inJump){
+            for (let i = 0; i < 10;i++){
+                this.move(speed, 'up');
+            }
+            this.setState('inJump', true);
+        } else if (!state) {
+            this.setState('inJump', false);
+        }
     }
 }
