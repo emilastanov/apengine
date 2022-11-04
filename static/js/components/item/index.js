@@ -23,7 +23,12 @@ class Item extends Component{
             transparent: !transparent,
             movementDirection: {},
             fixed: fixed,
-            collision: {}
+            collision: {
+                left: false,
+                right: false,
+                down: false,
+                up: false
+            }
         });
 
 

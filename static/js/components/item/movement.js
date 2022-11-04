@@ -45,8 +45,8 @@ export const movementMixin = {
     useKeyboardForMove(speed, keyboardState) {
         ['up', 'down', 'left', 'right'].forEach((direction) => {
             if (keyboardState[direction]) {
-                this.move(speed + (this.state.game.state.gravity ? this.state.fallSpeed : 0), direction);
                 this.setMovementDirection(direction, true);
+                this.move(speed + (this.state.game.state.gravity ? this.state.fallSpeed : 0), direction);
             } else {
                 this.setMovementDirection(direction, false);
             }

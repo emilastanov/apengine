@@ -3,12 +3,13 @@ import {
     checkPointInAreaOfItem,
     getPointsOfRectLyingOnSameLineWithOuterPoint
 } from "../../../helpers/geometry.js";
-import {visualizePoints} from "../../../helpers/visualisers.js";
 import {getPointsBySides} from "./sides.js";
 
 
 export const checkBoxCollision = (box, anotherItem, sides) => {
+
     let points = [];
+
     getApexOfFigure(anotherItem).forEach((corner) => {
         points.push(...getPointsOfRectLyingOnSameLineWithOuterPoint({
             pos: {
@@ -20,8 +21,7 @@ export const checkBoxCollision = (box, anotherItem, sides) => {
         }, corner));
     });
 
-    visualizePoints(points, box);
-
+    // visualizePoints(points, box);
     const pointsBySides = getPointsBySides(box, points, box.state.movementDirection);
 
     Object.keys(sides).forEach((side)=>{

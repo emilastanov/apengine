@@ -1,12 +1,12 @@
 import {getApexOfFigure} from "./apexes.js";
 import {checkPointInAreaOfItem, getPointsOfCircleLyingOnSameLineWithOuterPoint} from "../../../helpers/geometry.js";
-import {visualizePoints} from "../../../helpers/visualisers.js";
 import {getPointsBySides} from "./sides.js";
 
 
 export const checkBallCollision = (ball, anotherItem, sides) => {
+
     let points = [];
-    console.log(getApexOfFigure(anotherItem))
+
     getApexOfFigure(anotherItem).forEach((corner) => {
         points.push(...getPointsOfCircleLyingOnSameLineWithOuterPoint({
             center: {
@@ -26,4 +26,5 @@ export const checkBallCollision = (ball, anotherItem, sides) => {
             checkPointInAreaOfItem(point, anotherItem)
         )).length;
     })
+
 }

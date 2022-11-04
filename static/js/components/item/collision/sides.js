@@ -1,6 +1,7 @@
 
 
 export const getPointsBySides = (figure, points, directions) => {
+
     const _points = [...points,{
         x: figure.state.pos.x,
         y: figure.state.pos.y + figure.state.size.height / 2
@@ -19,7 +20,6 @@ export const getPointsBySides = (figure, points, directions) => {
         y: figure.state.pos.y + figure.state.size.height / 2
     };
     const pointsBySides = {left:[],right:[],up:[],down:[]};
-
     Object.keys(directions).forEach((direction)=>{
         if(directions[direction]){
             _points.filter((point)=>{

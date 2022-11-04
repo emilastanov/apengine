@@ -51,6 +51,10 @@ export const keyboardMixin = {
                     event.preventDefault();
                     this.changeKeyboardButtonState("down", false);
                     break;
+                case 32:
+                    event.preventDefault();
+                    this.changeKeyboardButtonState("space", !this.state.pressedKeyboardButtons.gravity);
+                    break;
                 default:
                     console.log(event.keyCode)
                     break;
