@@ -139,7 +139,7 @@ const checkCollision = () => {
 
 const updateScore = (pipes) => {
     const lastPipe = pipes.state.generatedItems.slice(-1)[0];
-    if (lastPipe && lastPipe !== state.lastPipe && lastPipe.state.pos.x + lastPipe.state.size.width < state.isSmartphone ? 300 : 150) {
+    if (lastPipe && lastPipe !== state.lastPipe && lastPipe.state.pos.x + lastPipe.state.size.width < (state.isSmartphone ? 300 : 150)) {
         state.score += 1;
         visualizer.updateParams('score', {text: state.score});
         state.lastPipe = lastPipe;
