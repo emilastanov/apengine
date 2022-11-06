@@ -9,7 +9,7 @@ import {getRandomId} from "../../helpers/random.js";
 
 class Item extends Component{
 
-    constructor ({type, size, color, name, zIndex=1, fallSpeed=0, transparent=false, fixed=false}){
+    constructor ({type, size, color, img=null, repeat=false, name, zIndex=1, fallSpeed=0, transparent=false, fixed=false}){
         super();
         this.item = document.createElement("div");
         this.item.style.position = 'absolute';
@@ -23,6 +23,9 @@ class Item extends Component{
             pos: null,
             transparent: !transparent,
             movementDirection: {},
+            img: img,
+            animation: typeof img === 'object',
+            timer: 0,
             fixed: fixed,
             collision: {
                 left: false,
@@ -44,11 +47,22 @@ class Item extends Component{
             throw UNDEFINED_ITEM_TYPE;
         }
         this.item.style.zIndex = zIndex;
+        this.item.style.backgroundSize = `contain`;
+        this.item.style.backgroundRepeat = repeat ? 'repeat':`no-repeat`;
 
         if (color) {
             this.item.style.backgroundColor = color;
         }
 
+        if (img && typeof img !== 'object') {
+            this.item.style.backgroundImage = `url(${img})`;
+        } else if (img) {
+            this.item.style.backgroundImage = `url(${img[0]})`;
+        }
+    }
+    animate () {
+        this.setState('timer', this.state.timer + 1);
+        this.item.style.backgroundImage = `url(${this.state.img[this.state.timer % this.state.img.length]})`;
     }
 }
 

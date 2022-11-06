@@ -31,6 +31,10 @@ class Game extends Component{
             scene.body.style.width = `${scene.width}px`;
             scene.body.style.position = 'relative';
             scene.body.style.overflow = 'hidden';
+            scene.body.style.backgroundSize = 'cover';
+            if(scene.img) {
+                scene.body.style.backgroundImage = `url(${scene.img})`
+            }
         }
         else { throw SCENE_NOT_FOUND; }
     }
