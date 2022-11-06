@@ -6,6 +6,7 @@ import Component from "../component.js";
 import {itemMixin} from "./items.js";
 import {gravityMixin} from "./gravity.js";
 import {keyboardMixin} from "./keyboard.js";
+import {touchscreenMixin} from "./touchscreen.js";
 
 
 // Game instance
@@ -17,7 +18,8 @@ class Game extends Component{
             scene: scene,
             gravity: scene.gravity,
             items: [],
-            pressedKeyboardButtons: {}
+            pressedKeyboardButtons: {},
+            touchscreenState: {}
         });
         this.loopId = null;
 
@@ -47,11 +49,14 @@ class Game extends Component{
         clearInterval(this.loopId);
         document.removeEventListener('keyup');
         document.removeEventListener('keydown');
+        document.removeEventListener('touchstart');
+        document.removeEventListener('touchend');
     }
 }
 
 Object.assign(Game.prototype, keyboardMixin);
 Object.assign(Game.prototype, gravityMixin);
 Object.assign(Game.prototype, itemMixin);
+Object.assign(Game.prototype, touchscreenMixin);
 
 export default Game;

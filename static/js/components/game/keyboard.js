@@ -28,6 +28,10 @@ export const keyboardMixin = {
                     event.preventDefault();
                     this.changeKeyboardButtonState("space", true);
                     break;
+                case 27:
+                    event.preventDefault();
+                    this.changeKeyboardButtonState("esc", true);
+                    break;
                 default:
                     break;
             }
@@ -57,6 +61,10 @@ export const keyboardMixin = {
                 case 32:
                     event.preventDefault();
                     this.changeKeyboardButtonState("space", false);
+                    break;
+                case 27:
+                    event.preventDefault();
+                    this.changeKeyboardButtonState("esc", false);
                     break;
                 default:
                     // console.log(event.keyCode)

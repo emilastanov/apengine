@@ -9,7 +9,7 @@ import {getRandomId} from "../../helpers/random.js";
 
 class Item extends Component{
 
-    constructor ({type, size, color, name, fallSpeed=0, transparent=false, fixed=false}){
+    constructor ({type, size, color, name, zIndex=1, fallSpeed=0, transparent=false, fixed=false}){
         super();
         this.item = document.createElement("div");
         this.item.style.position = 'absolute';
@@ -43,6 +43,7 @@ class Item extends Component{
         } else {
             throw UNDEFINED_ITEM_TYPE;
         }
+        this.item.style.zIndex = zIndex;
 
         if (color) {
             this.item.style.backgroundColor = color;

@@ -42,7 +42,7 @@ export const movementMixin = {
             y: this.state.pos.y + speedY
         })
     },
-    useKeyboardForMove(speed, keyboardState, jumpOnly=false) {
+    useKeyboardForMove(speed, keyboardState, jumpOnly=false, touchscreenState=null) {
         if(!jumpOnly){
             ['up', 'down', 'left', 'right'].forEach((direction) => {
                 if (keyboardState[direction]) {
@@ -53,7 +53,7 @@ export const movementMixin = {
                 }
             });
         }
-        this.jump(speed, keyboardState['space']);
+        this.jump(speed, keyboardState['space'], touchscreenState ? touchscreenState['touched']: touchscreenState);
     },
     setMovementDirection(direction, state) {
         const directions = {...this.state.movementDirection};
@@ -61,7 +61,8 @@ export const movementMixin = {
 
         this.setState("movementDirection", directions);
     },
-    jump (speed, state) {
+    jump (speed, keyboardState, touchscreenState) {
+        const state = keyboardState || touchscreenState;
         if (state && !this.state.inJump){
             for (let i = 0; i < 10;i++){
                 this.move(speed, 'up');

@@ -29,3 +29,18 @@ export const visualizePoints = (points, item) => {
         });
     })
 }
+
+export const tsConsole = {
+    init(){
+        const tsConsole = document.createElement('p');
+        tsConsole.style.zIndex = '10000';
+        tsConsole.style.width = '100%';
+        tsConsole.style.height = '25%';
+        tsConsole.id = 'tsConsole';
+        document.body.appendChild(tsConsole);
+    },
+    log(log){
+        const tsConsole = document.getElementById('tsConsole');
+        tsConsole.innerText += `${JSON.stringify(log)}\n`;
+    }
+}
