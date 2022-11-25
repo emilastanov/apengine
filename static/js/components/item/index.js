@@ -1,13 +1,12 @@
-"use strict";
 
-import Component from "../component.js";
+import {Component} from "../component.js";
 import {UNDEFINED_ITEM_TYPE} from "../../errors/errors.js";
 import {movementMixin} from "./movement.js";
 import {collisionMixin} from "./collision/index.js";
 import {getRandomId} from "../../helpers/random.js";
 
 
-class Item extends Component{
+export class Item extends Component{
 
     constructor ({type, size, color, img=null, repeat=false, name, zIndex=1, fallSpeed=0, transparent=false, fixed=false}){
         super();
@@ -68,5 +67,3 @@ class Item extends Component{
 
 Object.assign(Item.prototype, movementMixin);
 Object.assign(Item.prototype, collisionMixin);
-
-export default Item;

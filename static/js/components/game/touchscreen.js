@@ -1,5 +1,4 @@
 
-
 export const touchscreenMixin = {
     useTouchscreen() {
         document.addEventListener('touchstart', (event)=>{

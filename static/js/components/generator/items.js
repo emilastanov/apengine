@@ -1,4 +1,4 @@
-import Item from "../item/index.js";
+import {Item} from "../item/index.js";
 
 export const itemsMixin = {
     generateItem() {

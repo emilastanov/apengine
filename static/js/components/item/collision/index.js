@@ -1,4 +1,3 @@
-"use strict";
 
 import {checkBallCollision} from "./ball.js";
 import {checkBoxCollision} from "./box.js";

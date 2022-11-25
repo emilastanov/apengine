@@ -1,8 +1,7 @@
-"use strict";
 import {
     SCENE_NOT_FOUND
 } from "../../errors/errors.js";
-import Component from "../component.js";
+import {Component} from "../component.js";
 import {itemMixin} from "./items.js";
 import {gravityMixin} from "./gravity.js";
 import {keyboardMixin} from "./keyboard.js";
@@ -10,7 +9,7 @@ import {touchscreenMixin} from "./touchscreen.js";
 
 
 // Game instance
-class Game extends Component{
+export class Game extends Component{
 
     constructor (scene) {
         super();
@@ -62,5 +61,3 @@ Object.assign(Game.prototype, keyboardMixin);
 Object.assign(Game.prototype, gravityMixin);
 Object.assign(Game.prototype, itemMixin);
 Object.assign(Game.prototype, touchscreenMixin);
-
-export default Game;

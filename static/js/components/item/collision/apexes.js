@@ -1,3 +1,4 @@
+
 export const getApexOfFigure = (figure) => {
     return figure.type === 'ball' ? [{
         x: figure.state.pos.x,

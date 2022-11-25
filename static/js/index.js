@@ -1,9 +1,11 @@
 import {SCENE} from "./constants.js";
-import Game from "./components/game/index.js";
-import Item from "./components/item/index.js";
-import Generator from "./components/generator/index.js";
-import Visualizer from "./components/visualizer/index.js";
-import {isSmartphone} from "./helpers/detectors.js";
+import {
+    Game,
+    Item,
+    Generator,
+    Visualizer,
+    isSmartphone
+} from "./ApEngine.js";
 
 
 const scene = document.getElementById(SCENE);

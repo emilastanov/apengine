@@ -1,11 +1,11 @@
-import Component from "../component.js";
+import {Component} from "../component.js";
 import {getRandomId} from "../../helpers/random.js";
 import {visualizerMixin} from "./visualizer.js";
 import {fluctuationsMixin} from "./fluctuations.js";
 import {itemsMixin} from "./items.js";
 
 
-class Generator extends Component {
+export class Generator extends Component {
 
     constructor({
                     itemOptions,
@@ -55,5 +55,3 @@ class Generator extends Component {
 Object.assign(Generator.prototype, visualizerMixin);
 Object.assign(Generator.prototype, fluctuationsMixin);
 Object.assign(Generator.prototype, itemsMixin);
-
-export default Generator;

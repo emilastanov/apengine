@@ -1,8 +1,8 @@
-import Component from "../component.js";
+import {Component} from "../component.js";
 import {itemAlreadyExist} from "../../errors/errors.js";
 
 
-class Visualizer extends Component {
+export class Visualizer extends Component {
     constructor(game) {
         super();
         this.game = game;
@@ -53,5 +53,3 @@ class Visualizer extends Component {
         })
     }
 }
-
-export default Visualizer;

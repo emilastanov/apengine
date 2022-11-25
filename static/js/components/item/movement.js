@@ -1,3 +1,4 @@
+
 export const movementMixin = {
     setPos(pos) {
         this.setState('pos', pos);

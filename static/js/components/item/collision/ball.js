@@ -27,5 +27,4 @@ export const checkBallCollision = (ball, anotherItem, sides) => {
             checkPointInAreaOfItem(point, anotherItem)
         )).length;
     })
-
 }

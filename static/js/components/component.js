@@ -1,7 +1,6 @@
-"use strict";
 import {STATE_IS_NOT_USE} from "../errors/errors.js";
 
-export default class Component {
+export class Component {
 
 	useState(state) {
 		this.state = state;
@@ -20,4 +19,4 @@ export default class Component {
 			throw STATE_IS_NOT_USE;
 		}
 	}
-};
+}

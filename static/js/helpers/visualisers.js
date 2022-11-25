@@ -1,4 +1,4 @@
-import Item from "../components/item/index.js";
+import {Item} from "../components/item/index.js";
 
 export const visualizePoints = (points, item) => {
     let resVisual;

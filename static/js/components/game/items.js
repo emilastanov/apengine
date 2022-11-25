@@ -1,4 +1,3 @@
-"use strict";
 import {itemAlreadyExist} from "../../errors/errors.js";
 import {dropUsedId} from "../../helpers/random.js";
 
