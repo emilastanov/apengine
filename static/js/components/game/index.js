@@ -50,10 +50,10 @@ export class Game extends Component{
 
     stop () {
         clearInterval(this.loopId);
-        document.removeEventListener('keyup');
-        document.removeEventListener('keydown');
-        document.removeEventListener('touchstart');
-        document.removeEventListener('touchend');
+        document.removeEventListener('keyup', this.keyUpListener);
+        document.removeEventListener('keydown', this.keyDownListener);
+        document.removeEventListener('touchstart', this.touchStartListener);
+        document.removeEventListener('touchend', this.touchEndListener);
     }
 }
 
