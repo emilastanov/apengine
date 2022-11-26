@@ -54,7 +54,7 @@ export const movementMixin = {
                 }
             });
         }
-        this.jump(speed, keyboardState['space'], touchscreenState ? touchscreenState['touched']: touchscreenState);
+        this.jump(speed, keyboardState['space'], touchscreenState?.['touched']);
     },
     setMovementDirection(direction, state) {
         const directions = {...this.state.movementDirection};

@@ -16,9 +16,52 @@ const state = {
     collision: false,
     lastPipe: null,
     score: 0,
+    isMenuShowed: false,
     isSmartphone: isSmartphone(),
     timer: 0,
 };
+
+const menuWrapper = {
+    name: 'menu_wrapper',
+    pos: {
+        x: state.isSmartphone? 200:225,
+        y: state.isSmartphone? 500:125
+    },
+    size: {
+        width: state.isSmartphone? 600:150,
+        height: state.isSmartphone? 400:100
+    },
+    params: {
+        background: '#383838',
+        borderRadius: '15px',
+        border: '2px solid #bfbfbf',
+        color: 'white'
+    }
+}
+
+const restartButton = {
+    name: 'restart_menu_button',
+    size: {
+        width: state.isSmartphone? 400:100,
+        height: state.isSmartphone? 200:50
+    },
+    pos: {
+        x: state.isSmartphone? 300:252,
+        y: state.isSmartphone? 580:160
+    },
+    params: {
+        background: '#bfbfbf',
+        borderRadius: '15px',
+        border: '2px solid #bfbfbf',
+        color: 'white',
+        text: 'Try again.',
+        fontSize: `${state.isSmartphone ? 75:20}px`,
+        padding: `${state.isSmartphone ? 45:10}px 0`,
+        boxSizing: "border-box",
+        cursor: "pointer"
+    }
+}
+
 
 if (state.isSmartphone) {
     document.body.style.backgroundColor = "black";
@@ -71,7 +114,7 @@ const pipes = new Generator({
 
 const ball = new Item({
     type: "ball",
-    size: state.isSmartphone ? 180 : 30,
+    size: state.isSmartphone ? 120 : 30,
     // color: "yellow",
     img: "static/imgs/golub1.png",
     name: "bird",
@@ -97,19 +140,20 @@ game.useTouchscreen();
 game.addItem(ball, {x: state.isSmartphone ? 300 : 150, y: state.isSmartphone ? window.innerHeight / 2 : 200});
 game.addItem(earth, {x: 0, y: 0});
 
-visualizer.addLabel(
-    'score',
-    {x: state.isSmartphone ? window.innerWidth / 2 - 150 : 250, y: state.isSmartphone ? window.innerHeight - 300 : 300},
-    {width: state.isSmartphone ? 300 : 100, height: state.isSmartphone ? 150 : 50},
-    {
+
+visualizer.addLabel({
+    name:'score',
+    pos:{x: state.isSmartphone ? window.innerWidth / 2 - 150 : 250, y: state.isSmartphone ? window.innerHeight - 300 : 300},
+    size:{width: state.isSmartphone ? 300 : 100, height: state.isSmartphone ? 150 : 50},
+    params:{
         background: '#383838',
         borderRadius: '15px',
         border: '2px solid #bfbfbf',
         color: 'white',
-        text: '0'
+        text: '0',
+        fontSize: `${state.isSmartphone? 120 : 45}px`
     }
-);
-
+});
 game.loop(() => {
     checkPause();
 
@@ -118,7 +162,25 @@ game.loop(() => {
         pipes.generate();
         checkCollision();
         updateScore(pipes);
-        ball.useKeyboardForMove(state.isSmartphone ? 18 : 6, game.state.pressedKeyboardButtons, true, game.state.touchscreenState);
+
+        ball.useKeyboardForMove(
+            state.isSmartphone ? 18 : 6,
+            game.state.pressedKeyboardButtons,
+            true,
+            game.state.touchscreenState
+        );
+    } else {
+        if (!state.isMenuShowed){
+            visualizer.addLabel(menuWrapper);
+            const button = visualizer.addLabel(restartButton);
+            button.onclick = (event)=>{
+                location.reload();
+            };
+            button.ontouchend = (event)=>{
+                location.reload();
+            };
+            state.isMenuShowed = true;
+        }
     }
 }, 16);
 
@@ -157,3 +219,4 @@ const updateScore = (pipes) => {
         state.lastPipe = lastPipe;
     }
 };
+

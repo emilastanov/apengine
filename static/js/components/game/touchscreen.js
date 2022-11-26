@@ -9,8 +9,8 @@ export const touchscreenMixin = {
         this.setState('touchscreenState', {touched: false});
     },
     useTouchscreen() {
-        document.addEventListener('touchstart', this.touchStartListener);
-        document.addEventListener('touchend', this.touchEndListener);
+        document.addEventListener('touchstart', this.touchStartListener.bind(this));
+        document.addEventListener('touchend', this.touchEndListener.bind(this));
         document.addEventListener('touchmove',(event)=>{
             event.preventDefault();
         })

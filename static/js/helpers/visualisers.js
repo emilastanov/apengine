@@ -36,6 +36,8 @@ export const tsConsole = {
         tsConsole.style.zIndex = '10000';
         tsConsole.style.width = '100%';
         tsConsole.style.height = '25%';
+        tsConsole.style.position = 'absolute';
+        tsConsole.style.top = '0';
         tsConsole.id = 'tsConsole';
         document.body.appendChild(tsConsole);
     },

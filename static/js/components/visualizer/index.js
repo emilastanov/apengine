@@ -11,7 +11,7 @@ export class Visualizer extends Component {
         });
     }
 
-    addLabel(name, pos, size, params){
+    addLabel({name, pos, size, params}){
         if (name in Object.keys(this.state.objects)) {
             throw itemAlreadyExist(name);
         } else {
@@ -25,8 +25,7 @@ export class Visualizer extends Component {
             label.style.width = `${size.width}px`;
             label.style.height = `${size.height}px`;
             label.style.textAlign = 'center';
-            label.style.fontSize = `${size.height*0.85}px`;
-            label.innerText = params.text? params.text: "{{TEXT}}";
+            label.innerText = params.text ?? "";
 
             const object = {};
             object[name] = label;
@@ -36,7 +35,14 @@ export class Visualizer extends Component {
             this.updateParams(name, params);
 
             this.game.state.scene.body.appendChild(label);
+
+            return label;
         }
+    }
+
+    removeLabel(object_name){
+        this.state.objects[object_name].remove()
+        delete this.state.objects[object_name];
     }
 
     updateParams(object_name, params){
