@@ -1,9 +1,13 @@
-import {itemAlreadyExist} from "../../errors/errors.js";
+import {IS_NOT_OF_ITEM, itemAlreadyExist} from "../../errors/errors.js";
 import {dropUsedId} from "../../helpers/random.js";
+import {Item} from "../item/index.js";
 
 
 export const itemMixin = {
     addItem (item, pos) {
+        if (!(item instanceof Item)){
+            throw IS_NOT_OF_ITEM;
+        }
         if (item.name in this.state.items){
             throw itemAlreadyExist(item.name);
         } else {

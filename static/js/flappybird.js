@@ -1,17 +1,17 @@
-import {SCENE} from "./constants.js";
+import {SCENE} from "./constants.js"; // ID of HTML object.
 import {
-    Game,
-    Item,
-    Generator,
-    Visualizer,
-    isSmartphone
-} from "./ApEngine.js";
+    Game, //  The main object of the game. It contains all the properties of the game.
+    Item, //  The subject of the game. It can be a game character or any other game object.
+    Generator, //  Game object generator.
+    Visualizer, //  Game parameters visualizer. Shows any information for the player.
+    isSmartphone //  Property showing the player's platform [true/false].
+} from "./ApEngine/ApEngine.js";
 
 
-const scene = document.getElementById(SCENE);
-
+// Below is a description of the objects of the game:
+// 1. The object contains game state properties.
 const state = {
-    pause: false,
+    gameEnd: false,
     prevEsc: false,
     collision: false,
     lastPipe: null,
@@ -21,6 +21,7 @@ const state = {
     timer: 0,
 };
 
+// 2. Game menu window.
 const menuWrapper = {
     name: 'menu_wrapper',
     pos: {
@@ -37,8 +38,9 @@ const menuWrapper = {
         border: '2px solid #bfbfbf',
         color: 'white'
     }
-}
+};
 
+// 3. Menu button.
 const restartButton = {
     name: 'restart_menu_button',
     size: {
@@ -60,25 +62,20 @@ const restartButton = {
         boxSizing: "border-box",
         cursor: "pointer"
     }
-}
+};
 
-
-if (state.isSmartphone) {
-    document.body.style.backgroundColor = "black";
-}
-
-const game = new Game({
-    body: scene,
+// 4. All required properties of the game scene.
+const scene = {
+    body: document.getElementById(SCENE),
     width: state.isSmartphone ? window.innerWidth : 600,
     height: state.isSmartphone ? window.innerHeight : 400,
     img: 'static/imgs/fon.png',
     color: "#6699e8",
     gravity: true
-});
+};
 
-
-const pipes = new Generator({
-    game: game,
+// 5. Game object generator properties.
+const generatorProperties = {
     itemOptions: {
         type: "box",
         size: {
@@ -110,18 +107,19 @@ const pipes = new Generator({
     },
     frequency: 100,
     removeIfOutside: true
-});
+};
 
-const ball = new Item({
+// 6. Game character properties.
+const birdProperties = {
     type: "ball",
     size: state.isSmartphone ? 120 : 30,
-    // color: "yellow",
     img: "static/imgs/golub1.png",
     name: "bird",
     fallSpeed: state.isSmartphone ? 15 : 5,
-});
+};
 
-const earth = new Item({
+// 7. The game earth properties.
+const earthProperties = {
     type: "box",
     size: {
         width: state.isSmartphone ? window.innerWidth : 600,
@@ -130,18 +128,10 @@ const earth = new Item({
     color: 'grey',
     zIndex: 100,
     fixed: true
-});
+};
 
-const visualizer = new Visualizer(game);
-
-game.useKeyboard();
-game.useTouchscreen();
-
-game.addItem(ball, {x: state.isSmartphone ? 300 : 150, y: state.isSmartphone ? window.innerHeight / 2 : 200});
-game.addItem(earth, {x: 0, y: 0});
-
-
-visualizer.addLabel({
+// 8. The label of game score.
+const scoreLabel = {
     name:'score',
     pos:{x: state.isSmartphone ? window.innerWidth / 2 - 150 : 250, y: state.isSmartphone ? window.innerHeight - 300 : 300},
     size:{width: state.isSmartphone ? 300 : 100, height: state.isSmartphone ? 150 : 50},
@@ -153,22 +143,59 @@ visualizer.addLabel({
         text: '0',
         fontSize: `${state.isSmartphone? 120 : 45}px`
     }
-});
-game.loop(() => {
-    checkPause();
+};
 
-    if (!state.pause) {
+// 9. Background color for smartphone.
+if (state.isSmartphone) {
+    document.body.style.backgroundColor = "black";
+}
+// End of description of the objects.
+
+
+
+
+// Descriptions of the business logic of the game.
+// Declaration of the game object.
+const game = new Game(scene);
+// Adding a game object to the generator properties.
+generatorProperties.game = game;
+// Declaration of the object generator.
+const pipes = new Generator(generatorProperties);
+// Declaration of the game character.
+const bird = new Item(birdProperties);
+// Declaration of the game earth.
+const earth = new Item(earthProperties);
+// Declaration of the visualizer object.
+const visualizer = new Visualizer(game);
+
+// Activating use keyboard and touch screen.
+game.useKeyboard();
+game.useTouchscreen();
+
+// Adding game objects to the game.
+game.addItem(bird, {
+    x: state.isSmartphone ? 300 : 150,
+    y: state.isSmartphone ? window.innerHeight / 2 : 200
+});
+game.addItem(earth, {
+    x: 0,
+    y: 0
+});
+visualizer.addLabel(scoreLabel);
+
+// The game loop. Is a sequence of actions that is performed every frame.
+game.loop(() => {
+
+    if (!state.gameEnd) {
         randomFluctuation();
         pipes.generate();
         checkCollision();
         updateScore(pipes);
 
-        ball.useKeyboardForMove(
-            state.isSmartphone ? 18 : 6,
-            game.state.pressedKeyboardButtons,
-            true,
-            game.state.touchscreenState
-        );
+        bird.useKeyboardForMove({
+            speed: state.isSmartphone ? 18 : 6,
+            jumpOnly: true
+        });
     } else {
         if (!state.isMenuShowed){
             visualizer.addLabel(menuWrapper);
@@ -184,15 +211,6 @@ game.loop(() => {
     }
 }, 16);
 
-const checkPause = () => {
-    if (game.state.pressedKeyboardButtons.esc && !state.prevEsc) {
-        state.pause = !state.pause;
-        state.prevEsc = true;
-    } else if (!game.state.pressedKeyboardButtons.esc) {
-        state.prevEsc = false;
-    }
-};
-
 const randomFluctuation = () => {
     let fl = Math.round(Math.random() * 150) + 50;
     pipes.setState('posFluctuation', {
@@ -203,11 +221,11 @@ const randomFluctuation = () => {
 };
 
 const checkCollision = () => {
-    if (Object.keys(ball.state.collision).reduce((res, side) => (
-        res || ball.state.collision[side]
+    if (Object.keys(bird.state.collision).reduce((res, side) => (
+        res || bird.state.collision[side]
     ), false)) {
         state.collision = true;
-        state.pause = true;
+        state.gameEnd = true;
     }
 };
 
@@ -219,4 +237,3 @@ const updateScore = (pipes) => {
         state.lastPipe = lastPipe;
     }
 };
-

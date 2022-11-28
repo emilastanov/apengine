@@ -1,5 +1,5 @@
 
-import {G, g} from "../constants.js";
+import {G, g} from "../../constants.js";
 
 export const calcBoostBetweenTwoItems = (item1, item2) => {
 	return G*item2.weight/((item1.pos.x - item2.pos.x)**2 + (item1.pos.y - item2.pos.y)**2);

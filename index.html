@@ -10,10 +10,37 @@
 			margin: 0;
 			padding: 0;
 		}
+		#ap_scene {
+			position: absolute!important;
+			bottom: 0;
+			right: 0;
+			left: 0;
+			top: 0;
+			margin: auto;
+			border-radius: 15px;
+			box-shadow: 0 0 20px -5px gray;
+		}
 	</style>
 </head>
 <body>
 	<div id="ap_scene"></div>
 </body>
-<script src="static/js/index.js" type="module"></script>
+<script>
+	let route;
+
+	const path = location.hash;
+	switch (path){
+		case "#test":
+			route = 'test.js';
+			break;
+		default:
+			route = 'flappybird.js'
+			break;
+	}
+
+	const script = document.createElement('script');
+	script.src = "static/js/" + route;
+	script.type = "module";
+	document.body.appendChild(script);
+</script>
 </html>

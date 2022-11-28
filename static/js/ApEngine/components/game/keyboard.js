@@ -1,6 +1,6 @@
 
 export const keyboardMixin = {
-    keyDownListener (event){
+    keyDownListener (event,debug=false){
         switch (event.keyCode) {
             case 87:
             case 38:
@@ -31,6 +31,7 @@ export const keyboardMixin = {
                 this.changeKeyboardButtonState("esc", true);
                 break;
             default:
+                console.log(event.keyCode);
                 break;
         }
     },
@@ -65,7 +66,6 @@ export const keyboardMixin = {
                 this.changeKeyboardButtonState("esc", false);
                 break;
             default:
-                // console.log(event.keyCode)
                 break;
         }
     },

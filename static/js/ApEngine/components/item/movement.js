@@ -43,18 +43,20 @@ export const movementMixin = {
             y: this.state.pos.y + speedY
         })
     },
-    useKeyboardForMove(speed, keyboardState, jumpOnly=false, touchscreenState=null) {
-        if(!jumpOnly){
-            ['up', 'down', 'left', 'right'].forEach((direction) => {
-                if (keyboardState[direction]) {
-                    this.setMovementDirection(direction, true);
-                    this.move(speed + (this.state.game.state.gravity ? this.state.fallSpeed : 0), direction);
-                } else {
-                    this.setMovementDirection(direction, false);
-                }
-            });
-        }
-        this.jump(speed, keyboardState['space'], touchscreenState?.['touched']);
+    useKeyboardForMove({speed, jumpOnly=false, isJumpOn=true}) {
+        const keyboardState = this.state.game.state.pressedKeyboardButtons;
+        const touchscreenState = this.state.game.state.touchscreenState;
+
+
+        !jumpOnly && ['up', 'down', 'left', 'right'].forEach((direction) => {
+            if (keyboardState[direction]) {
+                this.setMovementDirection(direction, true);
+                this.move(speed + (this.state.game.state.gravity ? this.state.fallSpeed : 0), direction);
+            } else {
+                this.setMovementDirection(direction, false);
+            }
+        });
+        isJumpOn && this.jump(speed, keyboardState['space'], touchscreenState?.['touched']);
     },
     setMovementDirection(direction, state) {
         const directions = {...this.state.movementDirection};
