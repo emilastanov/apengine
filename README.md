@@ -3,7 +3,7 @@
 HTML5 game engine without Canvas.
 
 Engines feature are presented here  
-https://emilastanov.github.io/ApEngine/
+https://emilastanov.github.io/apengine/
 
 **Description of the logic of the demo game [here](../main/static/js/flappybird.js)**.
 
